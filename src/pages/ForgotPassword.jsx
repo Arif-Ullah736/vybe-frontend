@@ -26,6 +26,7 @@ const ForgotPassword = () => {
       );
       console.log(result.data);
       setLoading(false);
+      setStep(2);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -42,6 +43,7 @@ const ForgotPassword = () => {
       );
       console.log(result.data);
       setLoading(false);
+      setStep(3);
     } catch (error) {
       console.log(error);
       setLoading(false);
