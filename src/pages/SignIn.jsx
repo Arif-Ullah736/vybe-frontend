@@ -6,28 +6,66 @@ import axios from "axios";
 import { serverUrl } from "../App";
 import { ClipLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
+
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [loading, setLoading] = useState(false);
+
+  // ✅ ADDED ERROR STATE
+  const [errors, setErrors] = useState({});
+
   const navigate = useNavigate();
+
+  // ✅ VALIDATION ONLY ADDED
+  const validateForm = () => {
+    let newErrors = {};
+
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Invalid email format";
+    }
+
+    if (!password) {
+      newErrors.password = "Password is required";
+    } else if (password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // ✅ SIGN IN API
   const handleSignIn = async () => {
+    if (!validateForm()) return;
+
     try {
       setLoading(true);
+
       const result = await axios.post(
         `${serverUrl}/api/v1/auth/signin`,
-        {
-          email,
-          password,
-        },
+        { email, password },
         { withCredentials: true },
       );
+
       setLoading(false);
       console.log(result.data);
+
+      navigate("/"); // optional redirect
     } catch (error) {
-      console.log(error.response.data);
       setLoading(false);
+
+      setErrors({
+        api: error.response?.data?.message || "Something went wrong",
+      });
+
+      console.log(error.response?.data);
     }
   };
 
@@ -49,7 +87,10 @@ const SignIn = () => {
               placeholder=" "
               required
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setErrors({ ...errors, email: "" });
+              }}
               className="peer w-full h-[55px] rounded-2xl px-[20px] outline-none border-2 border-black"
             />
 
@@ -67,6 +108,11 @@ const SignIn = () => {
             >
               Enter Your Email
             </label>
+
+            {/* ERROR */}
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+            )}
           </div>
 
           {/* password field */}
@@ -77,7 +123,10 @@ const SignIn = () => {
               placeholder=" "
               required
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setErrors({ ...errors, password: "" });
+              }}
               className="peer w-full h-[55px] rounded-2xl px-[20px] pr-[55px] outline-none border-2 border-black"
             />
 
@@ -103,6 +152,11 @@ const SignIn = () => {
             >
               Enter Your Password
             </label>
+
+            {/* ERROR */}
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+            )}
           </div>
 
           {/* Forgot Password */}
@@ -115,11 +169,14 @@ const SignIn = () => {
             </span>
           </div>
 
-          {/*  signin button */}
+          {/* API ERROR */}
+          {errors.api && <p className="text-red-500 text-sm">{errors.api}</p>}
+
+          {/* signin button */}
           <button
             onClick={handleSignIn}
             disabled={loading}
-            className="w-[70%] px-[20px] py-[10px] bg-black text-white font-semibold h-[50px] cursor-pointer rounded-2xl   "
+            className="w-[70%] px-[20px] py-[10px] bg-black text-white font-semibold h-[50px] cursor-pointer rounded-2xl"
           >
             {loading ? <ClipLoader size={30} color="white" /> : "Sign In"}
           </button>
@@ -135,7 +192,7 @@ const SignIn = () => {
           </p>
         </div>
 
-        {/* logo div */}
+        {/* logo div (UNCHANGED) */}
         <div className="md:w-[50%] h-full hidden lg:flex justify-center items-center bg-[#000000] flex-col gap-[10px] text-white text-[16px] font-semibold rounded-l-[30px] shadow-2xl shadow-black">
           <img src={whiteLogo} alt="" className="w-[40%]" />
           <p>Not Jsut A Platform, Its A VYBE</p>
