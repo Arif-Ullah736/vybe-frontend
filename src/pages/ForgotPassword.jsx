@@ -1,9 +1,13 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { CgClipboard } from "react-icons/cg";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { serverUrl } from "../App";
 
 const ForgotPassword = () => {
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
+  // const [step2, setStep2] = useState(2);
+  // const [step3, setStep] = useState(3);
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -11,6 +15,57 @@ const ForgotPassword = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const handleStep1 = async () => {
+    setLoading(true);
+    try {
+      const result = await axios.post(
+        `${serverUrl}/api/v1/auth/send-otp`,
+        { email },
+        { withCredentials: true },
+      );
+      console.log(result.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
+  const handleStep2 = async () => {
+    setLoading(true);
+    try {
+      const result = await axios.post(
+        `${serverUrl}/api/v1/auth/verify-otp`,
+        { email, otp },
+        { withCredentials: true },
+      );
+      console.log(result.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
+  const handleStep3 = async () => {
+    setLoading(true);
+    try {
+      if (newPassword !== confirmPassword) {
+        return console.log("Password do not match");
+      }
+      const result = await axios.post(
+        `${serverUrl}/api/v1/auth/reset-password`,
+        { email, otp, newPassword },
+        { withCredentials: true },
+      );
+      console.log(result.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="w-full h-screen bg-gradient-to-b from-black to-gray-900 flex justify-center items-center">
@@ -48,7 +103,7 @@ const ForgotPassword = () => {
 
           {/*  send OTP button */}
           <button
-            // onClick={handleSignIn}
+            onClick={handleStep1}
             disabled={loading}
             className="mt-[30px] w-[70%] px-[20px] py-[10px] bg-black text-white font-semibold h-[50px] cursor-pointer rounded-2xl   "
           >
@@ -57,7 +112,7 @@ const ForgotPassword = () => {
         </div>
       )}
 
-      {/* step 2  submite otp*/}
+      {/* step 2  submite and verify otp*/}
       {step == 2 && (
         <div className="w-[90%] max-w-[500px] h-[500px]  bg-white rounded-2xl  flex justify-center items-center flex-col border-[#1a1f23]">
           <h2 className="text-[30px] font-semibold">Enter OTP</h2>
@@ -91,7 +146,7 @@ const ForgotPassword = () => {
 
           {/*  send OTP button */}
           <button
-            // onClick={handleSignIn}
+            onClick={handleStep2}
             disabled={loading}
             className="mt-[30px] w-[70%] px-[20px] py-[10px] bg-black text-white font-semibold h-[50px] cursor-pointer rounded-2xl   "
           >
@@ -100,7 +155,7 @@ const ForgotPassword = () => {
         </div>
       )}
 
-      {/* step 3  submite otp*/}
+      {/* step 3  enter new password*/}
       {step == 3 && (
         <div className="w-[90%] max-w-[500px] h-[500px]  bg-white rounded-2xl  flex justify-center items-center flex-col border-[#1a1f23]">
           <h2 className="text-[30px] font-semibold">Reset Password</h2>
@@ -178,7 +233,7 @@ const ForgotPassword = () => {
 
           {/*  send OTP button */}
           <button
-            // onClick={handleSignIn}
+            onClick={handleStep3}
             disabled={loading}
             className="mt-[30px] w-[70%] px-[20px] py-[10px] bg-black text-white font-semibold h-[50px] cursor-pointer rounded-2xl   "
           >
