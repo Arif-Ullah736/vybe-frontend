@@ -6,6 +6,8 @@ import axios from "axios";
 import { serverUrl } from "../App";
 import { ClipLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../redux/userSlice";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,8 +16,8 @@ const SignUp = () => {
   const [userName, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   // ✅ ADDED ERROR STATE
   const [errors, setErrors] = useState({});
@@ -60,7 +62,7 @@ const SignUp = () => {
       );
 
       console.log(result.data);
-
+      dispatch(setUserData(result.data));
       setLoading(false);
       navigate("/signin");
     } catch (error) {
@@ -77,13 +79,13 @@ const SignUp = () => {
       <div className="w-[90%] lg:max-w-[60%] h-[550px] bg-white rounded-2xl flex items-center justify-center overflow-hidden border-2 border-[#1a1f23]">
         {/* form div */}
         <div className="w-full lg:w-[50%] h-full bg-white flex flex-col items-center p-[10px] gap-[20px]">
-          <div className="flex items-center justify-center text-[20px] gap-[10px] font-semibold mt-[40px]">
+          <div className="flex items-center justify-center text-[20px] gap-[10px] font-semibold mt-[20px]">
             <span>Sign up to</span>
             <img src={logo} alt="" className="w-[70px]" />
           </div>
 
           {/* name field */}
-          <div className="relative w-[90%] mt-[30px]">
+          <div className="relative w-[90%] mt-[10px]">
             <input
               type="text"
               id="name"

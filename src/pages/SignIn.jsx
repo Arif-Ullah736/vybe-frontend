@@ -6,6 +6,8 @@ import axios from "axios";
 import { serverUrl } from "../App";
 import { ClipLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../redux/userSlice";
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,6 +16,7 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   // ✅ ADDED ERROR STATE
   const [errors, setErrors] = useState({});
@@ -56,8 +59,8 @@ const SignIn = () => {
 
       setLoading(false);
       console.log(result.data);
-
-      navigate("/"); // optional redirect
+      dispatch(setUserData(result.data));
+      // navigate("/"); // optional redirect
     } catch (error) {
       setLoading(false);
 
