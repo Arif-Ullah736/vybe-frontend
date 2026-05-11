@@ -60,7 +60,7 @@ const SignIn = () => {
       setLoading(false);
       console.log(result.data);
       dispatch(setUserData(result.data));
-      // navigate("/"); // optional redirect
+      navigate("/"); // optional redirect
     } catch (error) {
       setLoading(false);
 

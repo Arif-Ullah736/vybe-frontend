@@ -5,7 +5,7 @@ import { serverUrl } from "../App";
 import { ClipLoader } from "react-spinners";
 
 const ForgotPassword = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
 
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");

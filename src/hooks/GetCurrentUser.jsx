@@ -18,6 +18,7 @@ const GetCurrentUser = () => {
         console.log(error);
       }
     };
+    fetchUser();
   }, []);
 };
 
