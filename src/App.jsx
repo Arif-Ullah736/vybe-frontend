@@ -6,10 +6,10 @@ import SignIn from "./pages/SignIn";
 import ForgotPassword from "./pages/ForgotPassword";
 import { useSelector } from "react-redux";
 import Home from "./pages/Home";
-import GetCurrentUser from "./hooks/GetCurrentUser";
+import useGetCurrentUser from "./hooks/GetCurrentUser";
 export const serverUrl = "http://localhost:4000";
 function App() {
-  GetCurrentUser();
+  useGetCurrentUser();
   const { userData } = useSelector((state) => state.user);
   return (
     <Routes>

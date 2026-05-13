@@ -38,17 +38,17 @@ const LeftHome = () => {
         <div className="flex items-center gap-[10px]">
           <div className="w-[70px] h-[70px] rounded-full border-2 border-black cursor-pointer overflow-hidden">
             <img
-              src={userData.profileImage || dp}
+              src={userData?.profileImage || dp}
               alt=""
               className="w-full object-cover"
             />
           </div>
           <div>
             <div className="text-[18px] text-white font-semibold">
-              {userData.userName}
+              {userData?.userName}
             </div>
             <div className="text-[15px] text-gray-400 font-semibold">
-              {userData.name}
+              {userData?.name}
             </div>
           </div>
         </div>

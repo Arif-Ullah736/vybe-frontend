@@ -62,7 +62,7 @@ const SignUp = () => {
       );
 
       console.log(result.data);
-      dispatch(setUserData(result.data));
+      dispatch(setUserData(result.data.user));
       setLoading(false);
       navigate("/signin");
     } catch (error) {

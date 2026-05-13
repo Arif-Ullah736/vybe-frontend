@@ -59,7 +59,7 @@ const SignIn = () => {
 
       setLoading(false);
       console.log(result.data);
-      dispatch(setUserData(result.data));
+      dispatch(setUserData(result.data.user));
       navigate("/"); // optional redirect
     } catch (error) {
       setLoading(false);
@@ -190,7 +190,7 @@ const SignIn = () => {
           >
             Don,t have an account ?{" "}
             <span className="border-b-2 border-b-black pb-[3px] text-black ">
-              Sign Out
+              Sign Up
             </span>
           </p>
         </div>
