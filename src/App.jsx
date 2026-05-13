@@ -7,9 +7,12 @@ import ForgotPassword from "./pages/ForgotPassword";
 import { useSelector } from "react-redux";
 import Home from "./pages/Home";
 import useGetCurrentUser from "./hooks/GetCurrentUser";
+import useGetSuggestedUsers from "./hooks/GetSuggestedUsers";
+
 export const serverUrl = "http://localhost:4000";
 function App() {
   useGetCurrentUser();
+  useGetSuggestedUsers();
   const { userData } = useSelector((state) => state.user);
   return (
     <Routes>

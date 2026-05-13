@@ -6,9 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { serverUrl } from "../App";
 import { setUserData } from "../redux/userSlice";
+import OtherUser from "./OtherUser";
 
 const LeftHome = () => {
-  const { userData } = useSelector((state) => state.user);
+  const { userData, suggestedUsers } = useSelector((state) => state.user);
   console.log("==>", userData);
   const dispatch = useDispatch();
 
@@ -34,7 +35,7 @@ const LeftHome = () => {
       </div>
 
       {/* user profile  */}
-      <div className="flex  justify-between items-center  gap-[10px] px-[10px]">
+      <div className="flex  justify-between items-center  gap-[10px] px-[10px] border-2 border-b-gray-900 py-[10px]">
         <div className="flex items-center gap-[10px]">
           <div className="w-[70px] h-[70px] rounded-full border-2 border-black cursor-pointer overflow-hidden">
             <img
@@ -59,6 +60,16 @@ const LeftHome = () => {
         >
           Log Out{" "}
         </div>
+      </div>
+
+      {/* suggested users */}
+      <div className="w-full flex flex-col  gap-[20px] p-[20px]">
+        <h1 className="text-white text-[19px]">Suggested Users</h1>
+        {suggestedUsers.slice(0, 3).map((user, index) => (
+          <div key={index}>
+            <OtherUser user={user} />
+          </div>
+        ))}
       </div>
     </div>
   );
