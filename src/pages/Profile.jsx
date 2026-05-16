@@ -11,7 +11,7 @@ import Navbar from "../components/Navbar";
 const Profile = () => {
   const { userName } = useParams();
   const dispatch = useDispatch();
-  const { profileData } = useSelector((state) => state.user);
+  const { profileData, userData } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const handleProfile = async () => {
     console.log("profile clicke...");
@@ -97,23 +97,111 @@ const Profile = () => {
         </div>
 
         {/* Followers */}
-        <div>
-          <p>100k</p>
-          <p>Followers </p>
+        <div className=" ">
+          <div className="">
+            {/* followers image  */}
+            <div className="relative flex  ">
+              {/* image1 */}
+              <div className=" absolute w-[40px] h-[40px] rounded-full border-2 border-black cursor-pointer overflow-hidden">
+                <img
+                  src={profileData?.profileImage || dp}
+                  alt=""
+                  className="w-full object-cover"
+                />
+              </div>
+
+              {/* image2 */}
+              <div className=" absolute left-[10px] w-[40px] h-[40px] rounded-full border-2 border-black cursor-pointer overflow-hidden">
+                <img
+                  src={profileData?.profileImage || dp}
+                  alt=""
+                  className="w-full object-cover"
+                />
+              </div>
+
+              {/* image3 */}
+              <div className="absolute left-[18px] w-[40px] h-[40px] rounded-full border-2 border-black cursor-pointer overflow-hidden">
+                <img
+                  src={profileData?.profileImage || dp}
+                  alt=""
+                  className="w-full object-cover"
+                />
+              </div>
+            </div>
+            {/* followers length */}
+            <div className="text-[22px] md:text-[30px] font-semibold ml-15 ">
+              {profileData?.followers.length}
+            </div>
+          </div>
+
+          <div className="text-[18px] md:text-[22px] text-[#ffffffc7]">
+            Followers{" "}
+          </div>
         </div>
 
         {/* Following */}
-        <div>
-          <p>500</p>
-          <p>Following </p>
+        <div className=" ">
+          <div className="">
+            {/* followers image  */}
+            <div className="relative flex  ">
+              {/* image1 */}
+              <div className=" absolute w-[40px] h-[40px] rounded-full border-2 border-black cursor-pointer overflow-hidden">
+                <img
+                  src={profileData?.profileImage || dp}
+                  alt=""
+                  className="w-full object-cover"
+                />
+              </div>
+
+              {/* image2 */}
+              <div className=" absolute left-[10px] w-[40px] h-[40px] rounded-full border-2 border-black cursor-pointer overflow-hidden">
+                <img
+                  src={profileData?.profileImage || dp}
+                  alt=""
+                  className="w-full object-cover"
+                />
+              </div>
+
+              {/* image3 */}
+              <div className="absolute left-[18px] w-[40px] h-[40px] rounded-full border-2 border-black cursor-pointer overflow-hidden">
+                <img
+                  src={profileData?.profileImage || dp}
+                  alt=""
+                  className="w-full object-cover"
+                />
+              </div>
+            </div>
+            {/* following length */}
+            <div className="text-[22px] md:text-[30px] font-semibold ml-15 ">
+              {profileData?.following.length}
+            </div>
+          </div>
+
+          <div className="text-[18px] md:text-[22px] text-[#ffffffc7]">
+            Following{" "}
+          </div>
         </div>
       </div>
 
       {/* Edit Profile Button */}
-      <div className="flex items-center justify-center mt-8">
-        <button className="bg-white  text-black font-bold py-2 px-12 rounded-full">
-          Edit Profile
-        </button>
+      <div className="mt-[10px] w-full h-[80px] flex items-center justify-center gap-[20px]">
+        {profileData?._id === userData?._id && (
+          <button className="bg-white  text-black font-bold py-2 px-[10px] py-[5px] h-[40px] min-w-[150px] rounded-2xl cursor-pointer">
+            Edit Profile
+          </button>
+        )}
+
+        {profileData?._id !== userData?._id && (
+          <>
+            <button className="bg-white  text-black font-bold py-2 px-[10px] py-[5px] h-[40px] min-w-[150px] rounded-2xl cursor-pointer">
+              Follow
+            </button>
+
+            <button className="bg-white  text-black font-bold py-2 px-[10px] py-[5px] h-[40px] min-w-[150px] rounded-2xl cursor-pointer">
+              Message
+            </button>
+          </>
+        )}
       </div>
 
       {/* footer part */}
