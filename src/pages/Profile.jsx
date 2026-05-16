@@ -65,29 +65,35 @@ const Profile = () => {
       </div>
 
       {/* user profile */}
-      <div className="flex  items-top justify-center w-full mt-10 gap-10 ">
+      <div className="flex  items-start justify-center w-full h-[150px]  pt-[20px] px-[10px] gap-[20px] lg:gap-[50px]">
         {/* profile image */}
-        <div className="w-20 h-20 rounded-full">
+        <div className="w-[80px] h-[80px] md:w-[140px] md:h-[140px] rounded-full border-2 border-black cursor-pointer overflow-hidden">
           <img
-            src={dp}
-            alt="profile image"
-            className="w-full h-full object-cover rounded-full"
+            src={profileData?.profileImage || dp}
+            alt=""
+            className="w-full object-cover"
           />
         </div>
         {/* profile details */}
         <div className="text-white">
-          <p>{profileData.name || "John Doe"}</p>
-          <p>{profileData.userName || "john_doe"}</p>
-          <p>{profileData.bio || "No bio available"}</p>
+          <p className="text-[22px] font-semibold">{profileData?.name}</p>
+          <p className="text-[17px] text-[#ffffe8] ">
+            {profileData?.profession || "New User"}
+          </p>
+          <p className="text-[17px] text-[#ffffe8] ">
+            {profileData?.bio || "No bio available"}
+          </p>
         </div>
       </div>
 
       {/* post followers folllowing detial */}
-      <div className="flex items-center justify-center gap-10 text-white mt-8">
+      <div className="flex items-center justify-center w-full h-[100px] md:gap-[60px]   text-white mt-8 gap-[40px]  px-[20%] pt-[30px]">
         {/* Post */}
         <div className="">
-          <p>100</p>
-          <p>Posts </p>
+          <p className="text-[22px] md:text-[30px] font-semibold">
+            {profileData?.posts.length}
+          </p>
+          <p className="text-[18px] md:text-[22px] text-[#ffffffc7]">Posts </p>
         </div>
 
         {/* Followers */}
