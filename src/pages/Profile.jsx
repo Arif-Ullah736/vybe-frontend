@@ -31,10 +31,6 @@ const Profile = () => {
     handleProfile();
   }, [userName]);
 
-  const handleBack = () => {
-    navigate("/");
-  };
-
   const handleLogOut = async () => {
     try {
       const result = await axios.get(`${serverUrl}/api/v1/auth/signout`, {
@@ -53,7 +49,7 @@ const Profile = () => {
       <div className="text-white flex items-center justify-between w-full h-[80px] px-[30px]">
         <FaArrowLeft
           className=" text-white w-[25px] h-[25px]  cursor-pointer"
-          onClick={handleBack}
+          onClick={() => navigate("/")}
         />
         <p className="text-semibold  text-[20px]">{userName}</p>
         <button
@@ -186,7 +182,10 @@ const Profile = () => {
       {/* Edit Profile Button */}
       <div className="mt-[10px] w-full h-[80px] flex items-center justify-center gap-[20px]">
         {profileData?._id === userData?._id && (
-          <button className="bg-white  text-black font-bold py-2 px-[10px] py-[5px] h-[40px] min-w-[150px] rounded-2xl cursor-pointer">
+          <button
+            onClick={() => navigate("/editprofile")}
+            className="bg-white  text-black font-bold py-2 px-[10px] py-[5px] h-[40px] min-w-[150px] rounded-2xl cursor-pointer"
+          >
             Edit Profile
           </button>
         )}
