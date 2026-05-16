@@ -32,7 +32,7 @@ const Profile = () => {
   }, [userName]);
 
   const handleBack = () => {
-    navigate(-1);
+    navigate("/");
   };
 
   const handleLogOut = async () => {
@@ -52,7 +52,7 @@ const Profile = () => {
       {/* top content */}
       <div className="text-white flex items-center justify-between w-full h-[80px] px-[30px]">
         <FaArrowLeft
-          className=" text-white w-[25px] h-[25px] "
+          className=" text-white w-[25px] h-[25px]  cursor-pointer"
           onClick={handleBack}
         />
         <p className="text-semibold  text-[20px]">{userName}</p>
@@ -205,8 +205,10 @@ const Profile = () => {
       </div>
 
       {/* footer part */}
-      <div className="bg-white w-[60%] mx-auto h-48 rounded-t-2xl mt-5 flex items-center justify-center ">
-        <Navbar />
+      <div className=" w-full min-h-[100vh] flex justify-center ">
+        <div className="w-full max-w-[900px] flex flex-col items-center rounded-t-[30px]  bg-white relative gap-[20px] pt-[30px]">
+          <Navbar />
+        </div>
       </div>
     </div>
   );
