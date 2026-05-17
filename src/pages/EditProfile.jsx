@@ -45,19 +45,23 @@ const EditProfile = () => {
       const response = await axios.post(
         `${serverUrl}/api/v1/user/editProfile`,
         formData,
-
         {
           withCredentials: true,
         },
       );
       console.log("data ...", response.data);
-      dispatch(setUserData(response.data));
-      dispatch(setProfileData(response.data));
-      navigate(`/profile/${userData?.userName}`);
+      dispatch(setUserData(response.data.data));
+      dispatch(setProfileData(response.data.data));
+      navigate(`/profile/${response.data.data.userName}`);
       setLoading(false);
     } catch (error) {
-      console.log(error);
       setLoading(false);
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Failed to update profile";
+      alert("Error: " + errorMessage);
+      console.log("EditProfile error:", error);
     }
   };
 
