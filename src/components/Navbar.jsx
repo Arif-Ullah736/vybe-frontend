@@ -19,15 +19,19 @@ const Navbar = () => {
         <IoHomeSharp />
       </div>
 
-      <div className="text-white w-[25px]  h-[25px]">
+      <div className="text-white w-[25px]  h-[25px] cursor-pointer">
         <ImSearch />
       </div>
 
-      <div className="text-white w-[25px]  h-[25px]">
+      <div
+        className="text-white w-[25px]  h-[25px] cursor-pointer
+"
+        onClick={() => navigate("/upload")}
+      >
         <PiCalendarPlusBold />
       </div>
 
-      <div className="text-white w-[25px]  h-[25px]">
+      <div className="text-white w-[25px]  h-[25px] cursor-pointer">
         <RxVideo />
       </div>
 

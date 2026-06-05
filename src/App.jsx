@@ -10,6 +10,7 @@ import useGetCurrentUser from "./hooks/GetCurrentUser";
 import useGetSuggestedUsers from "./hooks/GetSuggestedUsers";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
+import Upload from "./pages/Upload";
 
 export const serverUrl = "http://localhost:4000";
 function App() {
@@ -43,6 +44,11 @@ function App() {
       <Route
         path="/editprofile"
         element={userData ? <EditProfile /> : <Navigate to={"/signin"} />}
+      />
+
+      <Route
+        path="/upload"
+        element={userData ? <Upload /> : <Navigate to={"/signin"} />}
       />
     </Routes>
   );
