@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import { PiCalendarPlusBold } from "react-icons/pi";
 import VideoPlayer from "../components/VideoPlayer";
-
+import { serverUrl } from "../App";
+import axios from "axios";
 const Upload = () => {
   const navigate = useNavigate();
   const [uploadType, setUploadType] = useState("post");
@@ -24,6 +25,25 @@ const Upload = () => {
       setMediaType("video");
     }
   };
+  const uploadPost = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("media", backEndMedia);
+      formData.append("caption", caption);
+      formData.append("mediaType", mediaType);
+      const result = await axios.post(
+        `${serverUrl}/post/uploadPost`,
+        formData,
+        {
+          withCredentials: true,
+        },
+      );
+      console.log("result : ", result);
+    } catch (err) {
+      console.log("❌ Upload error:", err);
+    }
+  };
+
   return (
     <div className="w-full h-screen flex items-center flex-col bg-black pb-10 ">
       <div className="  w-full h-[80px] flex items-center gap-[20px] px-[20px]">
