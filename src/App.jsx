@@ -46,10 +46,11 @@ function App() {
         element={userData ? <EditProfile /> : <Navigate to={"/signin"} />}
       />
 
-      <Route
+      {/* <Route
         path="/upload"
         element={userData ? <Upload /> : <Navigate to={"/signin"} />}
-      />
+      /> */}
+      <Route path="/upload" element={<Upload />} />
     </Routes>
   );
 }

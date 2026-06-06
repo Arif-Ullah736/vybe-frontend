@@ -13,6 +13,18 @@ const Upload = () => {
         />
         <h1 className="text-white text-[22px] font-semibold">Upload Media</h1>
       </div>
+
+      <div className="w-[80%] max-w-[600px] h-[80px] bg-white  rounded-full flex justify-around items-center gap-[10px]">
+        <div className="w-[28%] h-[80%]  flex justify-center items-center text-[19px]">
+          Post
+        </div>
+        <div className="w-[28%] h-[80%]  flex justify-center items-center text-[19px]">
+          Story
+        </div>
+        <div className="w-[28%] h-[80%]  flex justify-center items-center text-[19px]">
+          Loop
+        </div>
+      </div>
     </div>
   );
 };
