@@ -3,6 +3,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import { PiCalendarPlusBold } from "react-icons/pi";
+import VideoPlayer from "../components/VideoPlayer";
 
 const Upload = () => {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ const Upload = () => {
   const [backEndMedia, setBackEndMedia] = useState(null);
   const mediaInput = useRef();
   const [mediaType, setMediaType] = useState("");
+  const [caption, setCaption] = useState("");
 
   const handleMedia = (e) => {
     const file = e.target.files[0];
@@ -85,8 +87,10 @@ const Upload = () => {
               {uploadType !== "story" && (
                 <input
                   type="text"
+                  value={caption}
                   placeholder="Write  caption..."
                   className="w-full border-b-gray-400 border-b-2 outline-none px-[10px] py-[5px] text-white mt-[20px] "
+                  onChange={(e) => setCaption(e.target.value)}
                 />
               )}
             </div>
@@ -94,16 +98,14 @@ const Upload = () => {
 
           {mediaType === "video" && (
             <div className="w-[80%] max-w-[500px] h-[250px] flex flex-col items-center justify-center mt-[5vh]">
-              <video
-                src={frontEndMedia}
-                alt=""
-                className="  h-[60%] rounded-2xl"
-              />
+              <VideoPlayer media={frontEndMedia} />
               {uploadType !== "story" && (
                 <input
                   type="text"
+                  value={caption}
                   placeholder="Write  caption..."
                   className="w-full border-b-gray-400 border-b-2 outline-none px-[10px] py-[5px] text-white mt-[20px] "
+                  onChange={(e) => setCaption(e.target.value)}
                 />
               )}
             </div>

@@ -1,9 +1,43 @@
 import React from "react";
+import { useState, useRef } from "react";
+import { IoVolumeHigh } from "react-icons/io5";
+import { IoMdVolumeOff } from "react-icons/io";
 
 const VideoPlayer = ({ media }) => {
+  const videoTag = useRef();
+  const [mute, setMute] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  const handleClick = () => {
+    if (isPlaying) {
+      videoTag.current.pause();
+      setIsPlaying(false);
+    } else {
+      videoTag.current.play();
+      setIsPlaying(true);
+    }
+  };
   return (
     <div className="h-full  relative cursor-pointer max-w-full rounded-2xl outline-hidden">
-      <video src={media} autoPlay loop />
+      <video
+        src={media}
+        autoPlay
+        loop
+        muted={mute}
+        ref={videoTag}
+        className="h-full cursor-pointer w-full object-cover rounded-2xl"
+        onClick={handleClick}
+      />
+      <div
+        className="absolute bottom-[10px] right-[10px]"
+        onClick={() => setMute((prev) => !prev)}
+      >
+        {mute ? (
+          <IoMdVolumeOff className="text-white w-[20px] h-[20px] font-semibold " />
+        ) : (
+          <IoVolumeHigh className="text-white w-[20px] h-[20px] font-semibold " />
+        )}
+      </div>
     </div>
   );
 };
