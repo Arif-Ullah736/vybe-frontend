@@ -23,7 +23,7 @@ const Upload = () => {
     }
   };
   return (
-    <div className="w-full h-screen flex items-center flex-col bg-black ">
+    <div className="w-full h-screen flex items-center flex-col bg-black pb-10 ">
       <div className="  w-full h-[80px] flex items-center gap-[20px] px-[20px]">
         <FaArrowLeft
           className="w-[25px] h-[25px] cursor-pointer  text-white"
@@ -80,11 +80,40 @@ const Upload = () => {
               <img
                 src={frontEndMedia}
                 alt=""
-                className=" object-contain h-[60%] rounded-2xl"
+                className="  h-[60%] rounded-2xl"
               />
+              {uploadType !== "story" && (
+                <input
+                  type="text"
+                  placeholder="Write  caption..."
+                  className="w-full border-b-gray-400 border-b-2 outline-none px-[10px] py-[5px] text-white mt-[20px] "
+                />
+              )}
+            </div>
+          )}
+
+          {mediaType === "video" && (
+            <div className="w-[80%] max-w-[500px] h-[250px] flex flex-col items-center justify-center mt-[5vh]">
+              <video
+                src={frontEndMedia}
+                alt=""
+                className="  h-[60%] rounded-2xl"
+              />
+              {uploadType !== "story" && (
+                <input
+                  type="text"
+                  placeholder="Write  caption..."
+                  className="w-full border-b-gray-400 border-b-2 outline-none px-[10px] py-[5px] text-white mt-[20px] "
+                />
+              )}
             </div>
           )}
         </div>
+      )}
+      {frontEndMedia && (
+        <button className="bg-white   font-semibold py-[5px] px-[10px] w-[60%] max-w-[400px]  h-[50px]  rounded-2xl cursor-pointer mt-[50px]">
+          Upload {uploadType}
+        </button>
       )}
     </div>
   );
