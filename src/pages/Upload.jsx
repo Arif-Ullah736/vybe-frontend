@@ -1,7 +1,7 @@
 import React from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState,useRef } from "react";
 import { PiCalendarPlusBold } from "react-icons/pi";
 
 const Upload = () => {
@@ -9,6 +9,7 @@ const Upload = () => {
   const [uploadType, setUploadType] = useState("post");
   const [frontEndMedia, setFronEndMedia] = useState(null);
   const [backEndMedia, setBackEndMedia] = useState(null);
+  const mediaInput = useRef();
 
   return (
     <div className="w-full h-screen flex items-center flex-col bg-black ">
@@ -20,7 +21,10 @@ const Upload = () => {
         <h1 className="text-white text-[22px] font-semibold">Upload Media</h1>
       </div>
 
-      <div className="w-[90%] max-w-[600px] h-[80px] bg-white  rounded-full flex justify-around items-center gap-[10px]">
+      <div className="w-[90%] max-w-[600px] h-[80px] bg-white  rounded-full flex justify-around items-center gap-[10px]"
+      onClick={()=>mediaInput.current.click()}
+      >
+        <input type="file" hidden ref={mediaInput} />
         {/* post  */}
         <div
           className={`  ${uploadType === "post" ? "bg-black text-white" : ""} w-[28%] h-[80%]  flex justify-center items-center text-[19px] font-semibold hover:bg-black rounded-full hover:text-white cursor-pointer hover:shadow-2xl hover:shadow-black`}
