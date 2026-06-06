@@ -15,6 +15,7 @@ const Upload = () => {
   const [mediaType, setMediaType] = useState("");
   const [caption, setCaption] = useState("");
 
+  // handle media file selection
   const handleMedia = (e) => {
     const file = e.target.files[0];
     setFronEndMedia(URL.createObjectURL(file));
