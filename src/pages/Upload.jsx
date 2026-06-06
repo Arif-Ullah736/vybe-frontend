@@ -29,11 +29,11 @@ const Upload = () => {
   const uploadPost = async () => {
     try {
       const formData = new FormData();
-      formData.append("media", backEndMedia);
+      formData.append("uploadMedia", backEndMedia);
       formData.append("caption", caption);
       formData.append("mediaType", mediaType);
       const result = await axios.post(
-        `${serverUrl}/post/uploadPost`,
+        `${serverUrl}/api/v1/post/uploadPost`,
         formData,
         {
           withCredentials: true,
@@ -42,6 +42,55 @@ const Upload = () => {
       console.log("result : ", result);
     } catch (err) {
       console.log("❌ Upload error:", err);
+    }
+  };
+
+  const uploadStory = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("media", backEndMedia);
+      formData.append("mediaType", mediaType);
+      const result = await axios.post(
+        `${serverUrl}/api/v1/story/upload`,
+        formData,
+        {
+          withCredentials: true,
+        },
+      );
+      console.log("result : ", result);
+    } catch (err) {
+      console.log("❌ Upload error:", err);
+    }
+  };
+
+  const uploadLoop = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("media", backEndMedia);
+      formData.append("caption", caption);
+      const result = await axios.post(
+        `${serverUrl}/api/v1/loop/upload`,
+        formData,
+        {
+          withCredentials: true,
+        },
+      );
+      console.log("result : ", result);
+    } catch (err) {
+      console.log("❌ Upload error:", err);
+    }
+  };
+
+  const handleUpload = () => {
+    console.log("button was clicked");
+    if (uploadType === "post") {
+      uploadPost();
+    }
+    if (uploadType === "story") {
+      uploadStory();
+    }
+    if (uploadType === "loop") {
+      uploadLoop();
     }
   };
 
@@ -134,7 +183,10 @@ const Upload = () => {
         </div>
       )}
       {frontEndMedia && (
-        <button className="bg-white   font-semibold py-[5px] px-[10px] w-[60%] max-w-[400px]  h-[50px]  rounded-2xl cursor-pointer mt-[50px]">
+        <button
+          className="bg-white   font-semibold py-[5px] px-[10px] w-[60%] max-w-[400px]  h-[50px]  rounded-2xl cursor-pointer mt-[50px]"
+          onClick={handleUpload}
+        >
           Upload {uploadType}
         </button>
       )}
