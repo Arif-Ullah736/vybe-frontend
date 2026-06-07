@@ -1,7 +1,7 @@
 import React from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useState, useRef, useDispatch, useSelector } from "react";
+import { useState, useRef } from "react";
 import { PiCalendarPlusBold } from "react-icons/pi";
 import VideoPlayer from "../components/VideoPlayer";
 import { serverUrl } from "../App";
@@ -10,6 +10,7 @@ import { setPostData } from "../redux/postSlice";
 import { setLoopData } from "../redux/loopSlice";
 import { setStoryData } from "../redux/storySlice";
 import { ClipLoader } from "react-spinners";
+import { useDispatch, useSelector } from "react-redux";
 
 const Upload = () => {
   const navigate = useNavigate();

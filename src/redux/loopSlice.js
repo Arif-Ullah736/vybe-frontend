@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  loopData: null,
+  loopData: [],
 };
 
 const loopSlice = createSlice({

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  storyData: null,
+  storyData: [],
 };
 
 const storySlice = createSlice({
