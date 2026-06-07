@@ -11,11 +11,13 @@ import useGetSuggestedUsers from "./hooks/GetSuggestedUsers";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
 import Upload from "./pages/Upload";
+import useGetAllPost from "./hooks/getAllPost";
 
 export const serverUrl = "http://localhost:4000";
 function App() {
   useGetCurrentUser();
   useGetSuggestedUsers();
+  useGetAllPost();
   const { userData } = useSelector((state) => state.user);
   return (
     <Routes>
