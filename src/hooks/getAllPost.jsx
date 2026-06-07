@@ -8,7 +8,7 @@ const useGetAllPost = () => {
   const dispatch = useDispatch();
   const { postData } = useSelector((state) => state.post);
   useEffect(() => {
-    if (!postData) {
+    if (!postData || postData.length === 0) {
       const fetchPost = async () => {
         try {
           const result = await axios.get(
@@ -17,7 +17,7 @@ const useGetAllPost = () => {
               withCredentials: true,
             },
           );
-          console.log(result.data);
+          console.log("all post api is called", result.data);
           dispatch(setPostData(result.data.data));
         } catch (error) {
           console.log(error);
@@ -25,7 +25,7 @@ const useGetAllPost = () => {
       };
       fetchPost();
     }
-  }, [dispatch]);
+  }, [dispatch, postData]);
 };
 
 export default useGetAllPost;
