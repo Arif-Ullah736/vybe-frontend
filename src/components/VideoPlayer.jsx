@@ -8,6 +8,7 @@ const VideoPlayer = ({ media }) => {
   const [mute, setMute] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
 
+  // handle video play and pause on click
   const handleClick = () => {
     if (isPlaying) {
       videoTag.current.pause();

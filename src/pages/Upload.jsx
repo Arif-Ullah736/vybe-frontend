@@ -105,6 +105,7 @@ const Upload = () => {
     }
   };
 
+  // handle media upload
   const handleUpload = () => {
     console.log("button was clicked");
     setLoading(true);
