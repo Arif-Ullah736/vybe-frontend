@@ -9,6 +9,7 @@ import axios from "axios";
 import { setPostData } from "../redux/postSlice";
 import { setLoopData } from "../redux/loopSlice";
 import { setStoryData } from "../redux/storySlice";
+import { ClipLoader } from "react-spinners";
 
 const Upload = () => {
   const navigate = useNavigate();
@@ -37,7 +38,6 @@ const Upload = () => {
     }
   };
   const uploadPost = async () => {
-    setLoading(true);
     try {
       const formData = new FormData();
       formData.append("uploadMedia", backEndMedia);
@@ -61,7 +61,6 @@ const Upload = () => {
   };
 
   const uploadStory = async () => {
-    setLoading(true);
     try {
       const formData = new FormData();
       formData.append("media", backEndMedia);
@@ -84,7 +83,6 @@ const Upload = () => {
   };
 
   const uploadLoop = async () => {
-    setLoading(true);
     try {
       const formData = new FormData();
       formData.append("video", backEndMedia);
@@ -108,6 +106,7 @@ const Upload = () => {
 
   const handleUpload = () => {
     console.log("button was clicked");
+    setLoading(true);
     if (uploadType === "post") {
       uploadPost();
     }
@@ -212,7 +211,11 @@ const Upload = () => {
           className="bg-white   font-semibold py-[5px] px-[10px] w-[60%] max-w-[400px]  h-[50px]  rounded-2xl cursor-pointer mt-[50px]"
           onClick={handleUpload}
         >
-          Upload {uploadType}
+          {loading ? (
+            <ClipLoader size={30} color="black" />
+          ) : (
+            ` Upload ${uploadType} `
+          )}
         </button>
       )}
     </div>
