@@ -1,11 +1,15 @@
 import React from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useState, useRef, useDispatch, useSelector } from "react";
 import { PiCalendarPlusBold } from "react-icons/pi";
 import VideoPlayer from "../components/VideoPlayer";
 import { serverUrl } from "../App";
 import axios from "axios";
+import { setPostData } from "../redux/postSlice";
+import { setLoopData } from "../redux/loopSlice";
+import { setStoryData } from "../redux/storySlice";
+
 const Upload = () => {
   const navigate = useNavigate();
   const [uploadType, setUploadType] = useState("post");
@@ -14,6 +18,12 @@ const Upload = () => {
   const mediaInput = useRef();
   const [mediaType, setMediaType] = useState("");
   const [caption, setCaption] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
+  const { postData } = useSelector((state) => state.post);
+  const { loopData } = useSelector((state) => state.loop);
+  const { storyData } = useSelector((state) => state.story);
 
   // handle media file selection
   const handleMedia = (e) => {
@@ -27,6 +37,7 @@ const Upload = () => {
     }
   };
   const uploadPost = async () => {
+    setLoading(true);
     try {
       const formData = new FormData();
       formData.append("uploadMedia", backEndMedia);
@@ -40,12 +51,17 @@ const Upload = () => {
         },
       );
       console.log("result : ", result);
+      dispatch(setPostData([...postData, result.data]));
+      setLoading(false);
+      navigate("/");
     } catch (err) {
       console.log("❌ Upload error:", err);
+      setLoading(false);
     }
   };
 
   const uploadStory = async () => {
+    setLoading(true);
     try {
       const formData = new FormData();
       formData.append("media", backEndMedia);
@@ -58,15 +74,20 @@ const Upload = () => {
         },
       );
       console.log("result : ", result);
+      dispatch(setStoryData([...storyData, result.data]));
+      setLoading(false);
+      navigate("/");
     } catch (err) {
       console.log("❌ Upload error:", err);
+      setLoading(false);
     }
   };
 
   const uploadLoop = async () => {
+    setLoading(true);
     try {
       const formData = new FormData();
-      formData.append("media", backEndMedia);
+      formData.append("video", backEndMedia);
       formData.append("caption", caption);
       const result = await axios.post(
         `${serverUrl}/api/v1/loop/upload`,
@@ -76,8 +97,12 @@ const Upload = () => {
         },
       );
       console.log("result : ", result);
+      dispatch(setLoopData([...loopData, result.data]));
+      setLoading(false);
+      navigate("/");
     } catch (err) {
       console.log("❌ Upload error:", err);
+      setLoading(false);
     }
   };
 
