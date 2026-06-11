@@ -5,6 +5,9 @@ import { GoHeart } from "react-icons/go";
 import { GoHeartFill } from "react-icons/go";
 import { MdOutlineInsertComment } from "react-icons/md";
 import { useSelector } from "react-redux";
+import { IoBookmark } from "react-icons/io5";
+import { IoBookmarkOutline } from "react-icons/io5";
+
 const Post = ({ postData }) => {
   const { userData } = useSelector((state) => state.user);
   return (
@@ -48,21 +51,28 @@ const Post = ({ postData }) => {
       {/*  likes and comments section */}
       <div className="w-full h-[60px] flex items-center justify-between px-[20px] mt-[10px] ">
         {/* likes and comments */}
-        <div className="flex">
+        <div className="flex items-center justify-center gap-[10px]">
           {/* likes */}
-          <div>
-            {!postData.likes.includes(userData._id) && <GoHeart />}
-            {postData.likes.includes(userData._id) && <GoHeartFill />}
+          <div className="flex items-center justify-center gap-[5px]">
+            {!postData.likes.includes(userData._id) && (
+              <GoHeart className="w-[25px] h-[25px] cursor-pointer" />
+            )}
+            {postData.likes.includes(userData._id) && (
+              <GoHeartFill className="w-[25px] h-[25px] cursor-pointer bg-red-600" />
+            )}
             <span className="">{postData.likes.length}</span>
           </div>
           {/* comments */}
-          <div>
-            <MdOutlineInsertComment />
+          <div className="flex items-center justify-center gap-[5px]">
+            <MdOutlineInsertComment className="w-[25px] h-[25px] cursor-pointer " />
             <span className="">{postData.comments.length}</span>
           </div>
         </div>
-        {/* icon */}
-        <div></div>
+        {/*save  icon */}
+        <div>
+          {!userData.saved.includes(postData.id) && <IoBookmarkOutline />}
+          {userData.saved.includes(postData.id) && <IoBookmark />}
+        </div>
       </div>
     </div>
   );
