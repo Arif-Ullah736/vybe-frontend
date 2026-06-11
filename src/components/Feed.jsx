@@ -37,7 +37,7 @@ const Feed = () => {
         <Navbar />
         {/* post data */}
         {postData?.map((post, index) => (
-          <Post key={index} postData={post} />
+          <Post key={index} post={post} />
         ))}
       </div>
     </div>
