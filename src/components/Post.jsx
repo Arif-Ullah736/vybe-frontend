@@ -11,6 +11,7 @@ import { BiSolidSend } from "react-icons/bi";
 import axios from "axios";
 import { serverUrl } from "../App";
 import { setPostData } from "../redux/postSlice";
+import { setUserData } from "../redux/userSlice";
 
 const Post = ({ post }) => {
   const { userData } = useSelector((state) => state.user);
@@ -59,12 +60,22 @@ const Post = ({ post }) => {
   // handle save
   const handleSave = async () => {
     try {
-      const result = await axios.get(
-        `${serverUrl}/api/v1/post/save/${post._id}`,
-        { withCredentials: true },
-      );
+      await axios.get(`${serverUrl}/api/v1/post/save/${post._id}`, {
+        withCredentials: true,
+      });
 
-      dispatch(setPostData(result.data.data));
+      // Update only the saved array without replacing entire user data
+      const isSaved = userData?.saved?.includes(post._id);
+      const updatedSaved = isSaved
+        ? userData.saved.filter((id) => id !== post._id)
+        : [...(userData.saved || []), post._id];
+
+      dispatch(
+        setUserData({
+          ...userData,
+          saved: updatedSaved,
+        }),
+      );
     } catch (error) {
       console.log(error);
     }
