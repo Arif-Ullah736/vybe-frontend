@@ -15,9 +15,8 @@ import { setPostData } from "../redux/postSlice";
 const Post = ({ post }) => {
   const { userData } = useSelector((state) => state.user);
   const { postData } = useSelector((state) => state.post);
-  const [showComment, setShowComment] = useState(true);
-  const [showComment, setShowComment] = useState(true);
-  const [message, setMessage] = useState(true);
+  const [showComment, setShowComment] = useState(false);
+  const [message, setMessage] = useState("");
   const dispatch = useDispatch();
 
   //  handle like
@@ -39,6 +38,7 @@ const Post = ({ post }) => {
 
   // handle comment
   const handleComment = async () => {
+    if (!message.trim()) return;
     try {
       const result = await axios.post(
         `${serverUrl}/api/v1/post/comment/${post._id}`,
@@ -50,6 +50,21 @@ const Post = ({ post }) => {
         p._id === post._id ? updatedPost : p,
       );
       dispatch(setPostData(updatedPosts));
+      setMessage(""); // Clear input after posting
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // handle save
+  const handleSave = async () => {
+    try {
+      const result = await axios.get(
+        `${serverUrl}/api/v1/post/save/${post._id}`,
+        { withCredentials: true },
+      );
+
+      dispatch(setPostData(result.data.data));
     } catch (error) {
       console.log(error);
     }
@@ -112,12 +127,18 @@ const Post = ({ post }) => {
           </div>
           {/* comments */}
           <div className="flex items-center justify-center gap-[5px]">
-            <MdOutlineInsertComment className="w-[25px] h-[25px] cursor-pointer " />
+            <MdOutlineInsertComment
+              onClick={() => setShowComment((prev) => !prev)}
+              className="w-[25px] h-[25px] cursor-pointer "
+            />
             <span className="">{post.comments?.length || 0}</span>
           </div>
         </div>
         {/*save  icon */}
-        <div className="flex items-center justify-center gap-[5px]">
+        <div
+          onClick={handleSave}
+          className="flex items-center justify-center gap-[5px]"
+        >
           {!userData?.saved?.includes(post._id) && (
             <IoBookmarkOutline className="w-[25px] h-[25px] cursor-pointer " />
           )}
@@ -160,7 +181,32 @@ const Post = ({ post }) => {
               <BiSolidSend className="w-[25px] h-[25px]" />
             </button>
           </div>
-          <div className="w-full max-h-[300px] overflow-auto"></div>
+          <div className="w-full max-h-[300px] overflow-auto px-[20px]">
+            {post.comments?.map((com, index) => {
+              if (!com) return null;
+              const authorName =
+                com?.author?.userName || com?.authorName || "Unknown";
+              const authorImage = com?.author?.profileImage || dp;
+              return (
+                <div
+                  key={index}
+                  className="flex gap-[10px] mb-[15px] items-start"
+                >
+                  <div className="w-[40px] h-[40px] rounded-full border-2 border-black cursor-pointer overflow-hidden flex-shrink-0">
+                    <img
+                      src={authorImage}
+                      alt="user"
+                      className="w-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-semibold text-sm">{authorName}</div>
+                    <div className="text-sm">{com?.message || ""}</div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
     </div>

@@ -7,6 +7,8 @@ import { setPostData } from "../redux/postSlice";
 const useGetAllPost = () => {
   const dispatch = useDispatch();
   const { postData } = useSelector((state) => state.post);
+  const { userData } = useSelector((state) => state.user);
+
   useEffect(() => {
     if (!postData || postData.length === 0) {
       const fetchPost = async () => {
@@ -25,7 +27,7 @@ const useGetAllPost = () => {
       };
       fetchPost();
     }
-  }, [dispatch, postData]);
+  }, [dispatch, postData, userData]);
 };
 
 export default useGetAllPost;
