@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import dp from "../assets/dp.jpg";
 import Navbar from "../components/Navbar";
+import FollowButton from "../components/FollowButton";
 const Profile = () => {
   const { userName } = useParams();
   const dispatch = useDispatch();
@@ -192,9 +193,15 @@ const Profile = () => {
 
         {profileData?._id !== userData?._id && (
           <>
-            <button className="bg-white  text-black font-bold py-2 px-[10px] py-[5px] h-[40px] min-w-[150px] rounded-2xl cursor-pointer">
+            {/* <button className="bg-white  text-black font-bold py-2 px-[10px] py-[5px] h-[40px] min-w-[150px] rounded-2xl cursor-pointer">
               Follow
-            </button>
+            </button> */}
+            <FollowButton
+              tailwind={
+                "bg-white  text-black font-bold py-2 px-[10px] py-[5px] h-[40px] min-w-[150px] rounded-2xl cursor-pointer"
+              }
+              targetUserId={profileData?._id}
+            />
 
             <button className="bg-white  text-black font-bold py-2 px-[10px] py-[5px] h-[40px] min-w-[150px] rounded-2xl cursor-pointer">
               Message
