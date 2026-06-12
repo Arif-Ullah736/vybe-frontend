@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import dp from "../assets/dp.jpg";
 import { useNavigate } from "react-router-dom";
+import FollowButton from "./FollowButton";
 const OtherUser = ({ user }) => {
   const { userData } = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -28,6 +29,10 @@ const OtherUser = ({ user }) => {
           </div>
         </div>
       </div>
+      <FollowButton
+        tailwind={`px-[10px] w-[100px] py-[5px] h-[40px] bg-white rounded-2xl `}
+        targetUserId={user._id}
+      />
     </div>
   );
 };
