@@ -31,7 +31,10 @@ const Navbar = () => {
         <PiCalendarPlusBold />
       </div>
 
-      <div className="text-white w-[25px]  h-[25px] cursor-pointer">
+      <div
+        className="text-white w-[25px]  h-[25px] cursor-pointer"
+        onClick={() => navigate("/loops")}
+      >
         <RxVideo />
       </div>
 

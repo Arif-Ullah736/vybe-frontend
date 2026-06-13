@@ -57,7 +57,7 @@ function App() {
       />
 
       <Route
-        path="/loop"
+        path="/loops"
         element={userData ? <Loops /> : <Navigate to={"/signin"} />}
       />
     </Routes>
