@@ -12,12 +12,15 @@ import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
 import Upload from "./pages/Upload";
 import useGetAllPost from "./hooks/getAllPost";
+import Loops from "./pages/Loops";
+import useGetAllLoops from "./hooks/getAllLoops";
 
 export const serverUrl = "http://localhost:4000";
 function App() {
   useGetCurrentUser();
   useGetSuggestedUsers();
   useGetAllPost();
+  useGetAllLoops();
   const { userData } = useSelector((state) => state.user);
   return (
     <Routes>
@@ -48,11 +51,15 @@ function App() {
         element={userData ? <EditProfile /> : <Navigate to={"/signin"} />}
       />
 
-      {/* <Route
+      <Route
         path="/upload"
         element={userData ? <Upload /> : <Navigate to={"/signin"} />}
-      /> */}
-      <Route path="/upload" element={<Upload />} />
+      />
+
+      <Route
+        path="/loop"
+        element={userData ? <Loops /> : <Navigate to={"/signin"} />}
+      />
     </Routes>
   );
 }
