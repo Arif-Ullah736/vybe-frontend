@@ -98,36 +98,22 @@ const Profile = () => {
           <div className="">
             {/* followers image  */}
             <div className="relative flex  ">
-              {/* image1 */}
-              <div className=" absolute w-[40px] h-[40px] rounded-full border-2 border-black cursor-pointer overflow-hidden">
-                <img
-                  src={profileData?.profileImage || dp}
-                  alt=""
-                  className="w-full object-cover"
-                />
+              {profileData?.followers?.slice(0, 3).map((user, index) => (
+                <div
+                  key={index}
+                  className={` w-[40px] h-[40px] rounded-full border-2 border-black cursor-pointer overflow-hidden ${index > 0 ? `absolute left-[${index * 9}]` : ""}`}
+                >
+                  <img
+                    src={user?.profileImage || dp}
+                    alt=""
+                    className="w-full object-cover"
+                  />
+                </div>
+              ))}
+              {/* followers length */}
+              <div className="text-[22px] text-white md:text-[30px] font-semibold ml-[15px] ">
+                {profileData?.followers.length}
               </div>
-
-              {/* image2 */}
-              <div className=" absolute left-[10px] w-[40px] h-[40px] rounded-full border-2 border-black cursor-pointer overflow-hidden">
-                <img
-                  src={profileData?.profileImage || dp}
-                  alt=""
-                  className="w-full object-cover"
-                />
-              </div>
-
-              {/* image3 */}
-              <div className="absolute left-[18px] w-[40px] h-[40px] rounded-full border-2 border-black cursor-pointer overflow-hidden">
-                <img
-                  src={profileData?.profileImage || dp}
-                  alt=""
-                  className="w-full object-cover"
-                />
-              </div>
-            </div>
-            {/* followers length */}
-            <div className="text-[22px] md:text-[30px] font-semibold ml-15 ">
-              {profileData?.followers.length}
             </div>
           </div>
 
@@ -148,6 +134,10 @@ const Profile = () => {
                   alt=""
                   className="w-full object-cover"
                 />
+                {/* following length */}
+                <div className="text-[22px] md:text-[30px] font-semibold ml-[15px] ">
+                  {profileData?.following.length}
+                </div>
               </div>
 
               {/* image2 */}
@@ -167,10 +157,6 @@ const Profile = () => {
                   className="w-full object-cover"
                 />
               </div>
-            </div>
-            {/* following length */}
-            <div className="text-[22px] md:text-[30px] font-semibold ml-15 ">
-              {profileData?.following.length}
             </div>
           </div>
 
@@ -193,14 +179,12 @@ const Profile = () => {
 
         {profileData?._id !== userData?._id && (
           <>
-            {/* <button className="bg-white  text-black font-bold py-2 px-[10px] py-[5px] h-[40px] min-w-[150px] rounded-2xl cursor-pointer">
-              Follow
-            </button> */}
             <FollowButton
               tailwind={
                 "bg-white  text-black font-bold py-2 px-[10px] py-[5px] h-[40px] min-w-[150px] rounded-2xl cursor-pointer"
               }
               targetUserId={profileData?._id}
+              onFollowChange={handleProfile}
             />
 
             <button className="bg-white  text-black font-bold py-2 px-[10px] py-[5px] h-[40px] min-w-[150px] rounded-2xl cursor-pointer">

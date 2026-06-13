@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { serverUrl } from "../App";
 import { toggleFollow } from "../redux/userSlice";
 
-const FollowButton = ({ targetUserId, tailwind }) => {
+const FollowButton = ({ targetUserId, tailwind, onFollowChange }) => {
   const { following } = useSelector((state) => state.user);
   const isFollowing = following.includes(targetUserId);
   const dispatch = useDispatch();
@@ -13,8 +13,11 @@ const FollowButton = ({ targetUserId, tailwind }) => {
       const result = await axios.get(
         `${serverUrl}/api/v1/user/follow/${targetUserId}`,
         { withCredentials: true },
-        dispatch(toggleFollow(targetUserId)),
       );
+      if (onFollowChange) {
+        onFollowChange();
+      }
+      dispatch(toggleFollow(targetUserId));
     } catch (error) {
       console.log(error);
     }
