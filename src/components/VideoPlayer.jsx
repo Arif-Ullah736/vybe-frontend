@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState, useRef } from "react";
 import { IoVolumeHigh } from "react-icons/io5";
 import { IoMdVolumeOff } from "react-icons/io";
@@ -18,6 +18,28 @@ const VideoPlayer = ({ media }) => {
       setIsPlaying(true);
     }
   };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const video = videoTag.current;
+        if (entry.isIntersecting) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.6 },
+    );
+    if (videoTag.current) {
+      observer.observe(videoTag.current);
+    }
+    return () => {
+      if (videoTag.current) {
+        observer.unobserve(videoTag.current);
+      }
+    };
+  }, []);
   return (
     <div className="h-full  relative cursor-pointer max-w-full rounded-2xl outline-hidden">
       <video
