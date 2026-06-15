@@ -3,12 +3,18 @@ import { IoVolumeHigh } from "react-icons/io5";
 import { IoMdVolumeOff } from "react-icons/io";
 import dp from "../assets/dp.jpg";
 import FollowButton from "./FollowButton";
+import { GoHeart } from "react-icons/go";
+import { GoHeartFill } from "react-icons/go";
+import { MdOutlineInsertComment } from "react-icons/md";
+import { useSelector } from "react-redux";
 
 const LoopsCard = ({ loop }) => {
   const videoRef = useRef();
   const [mute, setMute] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
   const [progress, setProgress] = useState(0);
+  const { userData } = useSelector((state) => state.user);
+  const [showComment, setShowComment] = useState(false);
 
   const handleTimeUpdate = () => {
     const video = videoRef.current;
@@ -106,7 +112,35 @@ const LoopsCard = ({ loop }) => {
         <div className="text-white pl-[10px]">{loop.caption}</div>
 
         {/* like and comment section */}
-        <div className="absolute right-0 bottom-[100px]  flex flex-col justify-center px-[10px] gap-[20px] text-white"></div>
+        <div className="absolute right-0 bottom-[180px]  flex flex-col justify-center px-[10px] gap-[20px] text-white">
+          {/* like ... */}
+          <div className="flex flex-col items-center cursor-pointer">
+            <div>
+              {!loop.likes?.includes(userData._id) && (
+                <GoHeart className="w-[25px] h-[25px] cursor-pointer" />
+              )}
+              {loop.likes?.includes(userData._id) && (
+                <GoHeartFill className="w-[25px] h-[25px] cursor-pointer text-red-600" />
+              )}
+            </div>
+            <div>
+              <span className="">{loop.likes?.length || 0}</span>
+            </div>
+          </div>
+
+          {/* comment ... */}
+          <div className="flex items-center justify-center flex-col cursor-pointer">
+            <div>
+              <MdOutlineInsertComment
+                onClick={() => setShowComment((prev) => !prev)}
+                className="w-[25px] h-[25px] cursor-pointer "
+              />
+            </div>
+            <div>
+              <span className="">{loop.comments?.length || 0}</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
