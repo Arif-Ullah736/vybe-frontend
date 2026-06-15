@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IoVolumeHigh } from "react-icons/io5";
 import { IoMdVolumeOff } from "react-icons/io";
+import dp from "../assets/dp.jpg";
 
 const LoopsCard = ({ loop }) => {
   const videoRef = useRef();
@@ -72,12 +73,29 @@ const LoopsCard = ({ loop }) => {
           <IoVolumeHigh className="text-white w-[20px] h-[20px] font-semibold " />
         )}
       </div>
+
       {/* prgess bar */}
       <div className=" absolute  bottom-0 left-0 w-full h-[5px] bg-gray-900">
         <div
           className="w-[200px] h-full  bg-white transition-all duration-200 ease-linear"
           style={{ width: `${progress}%` }}
         ></div>
+      </div>
+
+      {/* user information */}
+      <div className="w-full h-[100px]  absolute bottom-[10px]  ">
+        <div className="flex items-center  gap-[20px]">
+          <div className="w-[60px] h-[60px] rounded-full border-2 border-black cursor-pointer overflow-hidden">
+            <img
+              src={loop.author?.profileImage || dp}
+              alt=""
+              className="w-full object-cover"
+            />
+          </div>
+          <div className="font-semibold truncate w-[200px]">
+            {loop.author?.userName}
+          </div>
+        </div>
       </div>
     </div>
   );
