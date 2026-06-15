@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { IoVolumeHigh } from "react-icons/io5";
 import { IoMdVolumeOff } from "react-icons/io";
 import dp from "../assets/dp.jpg";
+import FollowButton from "./FollowButton";
 
 const LoopsCard = ({ loop }) => {
   const videoRef = useRef();
@@ -84,18 +85,28 @@ const LoopsCard = ({ loop }) => {
 
       {/* user information */}
       <div className="w-full h-[100px]  absolute bottom-[10px]  ">
-        <div className="flex items-center  gap-[20px]">
-          <div className="w-[60px] h-[60px] rounded-full border-2 border-black cursor-pointer overflow-hidden">
+        <div className="flex items-center pl-[10px]    gap-[10px]">
+          <div className="w-[40px] h-[40px] rounded-full border-2 border-black cursor-pointer overflow-hidden">
             <img
               src={loop.author?.profileImage || dp}
               alt=""
               className="w-full object-cover"
             />
           </div>
-          <div className="font-semibold truncate w-[200px]">
+          <div className="font-semibold truncate w-[100px] text-white">
             {loop.author?.userName}
           </div>
+          <FollowButton
+            targetUserId={loop?.autho?.id}
+            tailwind={
+              "px-[10px] py-[5px] text-white border-2 border-white rounded-2xl  text-[14p]"
+            }
+          />
         </div>
+        <div className="text-white pl-[10px]">{loop.caption}</div>
+
+        {/* like and comment section */}
+        <div className="absolute right-0 bottom-[100px]  flex flex-col justify-center px-[10px] gap-[20px] text-white"></div>
       </div>
     </div>
   );
