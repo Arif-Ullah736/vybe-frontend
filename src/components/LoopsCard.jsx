@@ -6,7 +6,10 @@ import FollowButton from "./FollowButton";
 import { GoHeart } from "react-icons/go";
 import { GoHeartFill } from "react-icons/go";
 import { MdOutlineInsertComment } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { serverUrl } from "../App";
+import { setLoopData } from "../redux/loopSlice";
 
 const LoopsCard = ({ loop }) => {
   const videoRef = useRef();
@@ -14,7 +17,56 @@ const LoopsCard = ({ loop }) => {
   const [isPlaying, setIsPlaying] = useState(true);
   const [progress, setProgress] = useState(0);
   const { userData } = useSelector((state) => state.user);
+  const { loopData } = useSelector((state) => state.loop);
   const [showComment, setShowComment] = useState(false);
+  const dispatch = useDispatch();
+
+  //  handle like
+  const handleLike = async () => {
+    try {
+      const result = await axios.get(
+        `${serverUrl}/api/v1/loop/like/${loop._id}`,
+        { withCredentials: true },
+      );
+
+      if (result.data.success) {
+        // Update the specific loop's likes in Redux
+        const updatedLoops = loopData.map((p) =>
+          p._id === loop._id
+            ? {
+                ...p,
+                likes: p.likes?.includes(userData._id)
+                  ? p.likes.filter((id) => id !== userData._id)
+                  : [...(p.likes || []), userData._id],
+              }
+            : p,
+        );
+        dispatch(setLoopData(updatedLoops));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // handle comment
+  // const handleComment = async () => {
+  //   if (!message.trim()) return;
+  //   try {
+  //     const result = await axios.post(
+  //       `${serverUrl}/api/v1/post/comment/${post._id}`,
+  //       { message },
+  //       { withCredentials: true },
+  //     );
+  //     const updatedPost = result.data.data;
+  //     const updatedPosts = postData.map((p) =>
+  //       p._id === post._id ? updatedPost : p,
+  //     );
+  //     dispatch(setPostData(updatedPosts));
+  //     setMessage(""); // Clear input after posting
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const handleTimeUpdate = () => {
     const video = videoRef.current;
@@ -112,9 +164,12 @@ const LoopsCard = ({ loop }) => {
         <div className="text-white pl-[10px]">{loop.caption}</div>
 
         {/* like and comment section */}
-        <div className="absolute right-0 bottom-[180px]  flex flex-col justify-center px-[10px] gap-[20px] text-white">
+        <div className="absolute right-0 bottom-[150px]  flex flex-col justify-center px-[10px] gap-[20px] text-white">
           {/* like ... */}
-          <div className="flex flex-col items-center cursor-pointer">
+          <div
+            onClick={handleLike}
+            className="flex flex-col items-center cursor-pointer"
+          >
             <div>
               {!loop.likes?.includes(userData._id) && (
                 <GoHeart className="w-[25px] h-[25px] cursor-pointer" />
