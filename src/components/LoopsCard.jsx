@@ -234,7 +234,7 @@ const LoopsCard = ({ loop }) => {
           onClick={() => setShowComment(false)}
         >
           <div
-            className="fixed right-0 top-0 w-full md:w-[400px] h-screen bg-black border-l border-gray-700 flex flex-col z-[1000]"
+            className="fixed bottom-0 left-0 w-full lg:w-[480px] lg:left-1/2 lg:-translate-x-1/2 h-[70%] bg-black border-t border-gray-700 flex flex-col z-[1000] rounded-t-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
