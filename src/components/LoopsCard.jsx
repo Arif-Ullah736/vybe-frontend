@@ -6,6 +6,8 @@ import FollowButton from "./FollowButton";
 import { GoHeart } from "react-icons/go";
 import { GoHeartFill } from "react-icons/go";
 import { MdOutlineInsertComment } from "react-icons/md";
+import { IoClose } from "react-icons/io5";
+import { TbSend } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { serverUrl } from "../App";
@@ -20,6 +22,7 @@ const LoopsCard = ({ loop }) => {
   const { loopData } = useSelector((state) => state.loop);
   const [showComment, setShowComment] = useState(false);
   const [showHeart, setShowHeart] = useState(false);
+  const [message, setMessage] = useState("");
   const dispatch = useDispatch();
 
   //  handle like
@@ -57,26 +60,35 @@ const LoopsCard = ({ loop }) => {
     //  agar loop k likes array k andar current user k id nahy hai tho usi like kero
     !loop?.likes?.includes(userData?._id) ? handleLike() : null;
   };
-
   // handle comment
-  // const handleComment = async () => {
-  //   if (!message.trim()) return;
-  //   try {
-  //     const result = await axios.post(
-  //       `${serverUrl}/api/v1/post/comment/${post._id}`,
-  //       { message },
-  //       { withCredentials: true },
-  //     );
-  //     const updatedPost = result.data.data;
-  //     const updatedPosts = postData.map((p) =>
-  //       p._id === post._id ? updatedPost : p,
-  //     );
-  //     dispatch(setPostData(updatedPosts));
-  //     setMessage(""); // Clear input after posting
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const handleComment = async () => {
+    if (!message.trim()) return;
+
+    try {
+      const result = await axios.post(
+        `${serverUrl}/api/v1/loop/comment/${loop._id}`,
+        { message },
+        { withCredentials: true },
+      );
+
+      if (result.data.success) {
+        const updatedLoops = loopData.map((p) =>
+          p._id === loop._id
+            ? {
+                ...p,
+                comments: result.data.comments,
+              }
+            : p,
+        );
+
+        dispatch(setLoopData(updatedLoops));
+
+        setMessage("");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleTimeUpdate = () => {
     const video = videoRef.current;
@@ -213,6 +225,81 @@ const LoopsCard = ({ loop }) => {
           </div>
         </div>
       </div>
+
+      {/* Comments Panel */}
+      {showComment && (
+        <div className="absolute inset-0 bg-black bg-opacity-60 z-40">
+          <div className="absolute right-0 top-0 w-full md:w-[400px] h-full bg-black border-l border-gray-700 flex flex-col">
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-700">
+              <h3 className="text-white font-semibold text-lg">Comments</h3>
+              <button
+                onClick={() => setShowComment(false)}
+                className="text-white hover:opacity-70"
+              >
+                <IoClose className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Comments List */}
+            <div className="flex-1 overflow-y-auto no-scrollbar p-4 space-y-4">
+              {loop.comments && loop.comments.length > 0 ? (
+                loop.comments.map((comment, index) => (
+                  <div key={index} className="flex gap-3">
+                    <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+                      <img
+                        src={comment.author?.profileImage || dp}
+                        alt=""
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <div className="bg-gray-900 rounded-lg px-3 py-2">
+                        <p className="text-white font-semibold text-sm">
+                          {comment.author?.userName}
+                        </p>
+                        <p className="text-gray-300 text-sm">
+                          {comment.message}
+                        </p>
+                      </div>
+                      <p className="text-gray-500 text-xs mt-1">
+                        {new Date(comment.createdAt).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="flex items-center justify-center h-full text-gray-400">
+                  <p>No comments yet. Be the first!</p>
+                </div>
+              )}
+            </div>
+
+            {/* Comment Input */}
+            <div className="border-t border-gray-700 p-4 flex gap-2">
+              <input
+                type="text"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    handleComment();
+                  }
+                }}
+                placeholder="Add a comment..."
+                className="flex-1 bg-gray-900 text-white rounded-full px-4 py-2 outline-none focus:border focus:border-gray-600 text-sm"
+              />
+              <button
+                onClick={handleComment}
+                disabled={!message.trim()}
+                className="text-blue-500 hover:text-blue-400 disabled:text-gray-600 transition"
+              >
+                <TbSend className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
