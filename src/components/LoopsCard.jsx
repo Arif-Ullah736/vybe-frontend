@@ -53,7 +53,7 @@ const LoopsCard = ({ loop }) => {
     setShowHeart(true);
     setTimeout(() => {
       setShowHeart(false);
-    }, 6000);
+    }, 600);
     //  agar loop k likes array k andar current user k id nahy hai tho usi like kero
     !loop?.likes?.includes(userData?._id) ? handleLike() : null;
   };
@@ -120,8 +120,8 @@ const LoopsCard = ({ loop }) => {
   return (
     <div className="w-full lg:w-[480px] lg:mx-auto h-screen flex items-center justify-center bg-black relative overflow-hidden">
       {showHeart && (
-        <div className="absolute top-1/2 left-1/2 transform translate-x-1/2 translate-y-1/2 heart-animation z-50 ">
-          <GoHeartFill className="w-[100px] h-[100px]  text-white drop-shadow-2xl  " />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 heart-animation z-50 pointer-events-none">
+          <GoHeartFill className="w-[120px] h-[120px] text-red-500 drop-shadow-2xl filter" />
         </div>
       )}
       <video
