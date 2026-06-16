@@ -227,23 +227,29 @@ const LoopsCard = ({ loop }) => {
       </div>
 
       {/* Comments Panel */}
+      {/* Comments Panel */}
       {showComment && (
-        <div className="absolute inset-0 bg-black bg-opacity-60 z-40">
-          <div className="absolute right-0 top-0 w-full md:w-[400px] h-full bg-black border-l border-gray-700 flex flex-col">
+        <div
+          className="fixed inset-0 bg-black/60 z-[999]"
+          onClick={() => setShowComment(false)}
+        >
+          <div
+            className="fixed right-0 top-0 w-full md:w-[400px] h-screen bg-black border-l border-gray-700 flex flex-col z-[1000]"
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-gray-700">
               <h3 className="text-white font-semibold text-lg">Comments</h3>
-              <button
+
+              <IoClose
                 onClick={() => setShowComment(false)}
-                className="text-white hover:opacity-70"
-              >
-                <IoClose className="w-6 h-6" />
-              </button>
+                className="w-7 h-7 text-white cursor-pointer hover:text-gray-300"
+              />
             </div>
 
             {/* Comments List */}
             <div className="flex-1 overflow-y-auto no-scrollbar p-4 space-y-4">
-              {loop.comments && loop.comments.length > 0 ? (
+              {loop.comments?.length > 0 ? (
                 loop.comments.map((comment, index) => (
                   <div key={index} className="flex gap-3">
                     <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
@@ -253,15 +259,18 @@ const LoopsCard = ({ loop }) => {
                         className="w-full h-full object-cover"
                       />
                     </div>
+
                     <div className="flex-1">
                       <div className="bg-gray-900 rounded-lg px-3 py-2">
                         <p className="text-white font-semibold text-sm">
                           {comment.author?.userName}
                         </p>
+
                         <p className="text-gray-300 text-sm">
                           {comment.message}
                         </p>
                       </div>
+
                       <p className="text-gray-500 text-xs mt-1">
                         {new Date(comment.createdAt).toLocaleDateString()}
                       </p>
@@ -281,14 +290,15 @@ const LoopsCard = ({ loop }) => {
                 type="text"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                onKeyPress={(e) => {
+                onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     handleComment();
                   }
                 }}
                 placeholder="Add a comment..."
-                className="flex-1 bg-gray-900 text-white rounded-full px-4 py-2 outline-none focus:border focus:border-gray-600 text-sm"
+                className="flex-1 bg-gray-900 text-white rounded-full px-4 py-2 outline-none border border-transparent focus:border-gray-600 text-sm"
               />
+
               <button
                 onClick={handleComment}
                 disabled={!message.trim()}
