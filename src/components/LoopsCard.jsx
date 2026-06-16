@@ -19,6 +19,7 @@ const LoopsCard = ({ loop }) => {
   const { userData } = useSelector((state) => state.user);
   const { loopData } = useSelector((state) => state.loop);
   const [showComment, setShowComment] = useState(false);
+  const [showHeart, setShowHeart] = useState(false);
   const dispatch = useDispatch();
 
   //  handle like
@@ -46,6 +47,15 @@ const LoopsCard = ({ loop }) => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleLikeOnDoubleClick = () => {
+    setShowHeart(true);
+    setTimeout(() => {
+      setShowHeart(false);
+    }, 6000);
+    //  agar loop k likes array k andar current user k id nahy hai tho usi like kero
+    !loop?.likes?.includes(userData?._id) ? handleLike() : null;
   };
 
   // handle comment
@@ -109,6 +119,11 @@ const LoopsCard = ({ loop }) => {
   }, []);
   return (
     <div className="w-full lg:w-[480px] lg:mx-auto h-screen flex items-center justify-center bg-black relative overflow-hidden">
+      {showHeart && (
+        <div className="absolute top-1/2 left-1/2 transform translate-x-1/2 translate-y-1/2 heart-animation z-50 ">
+          <GoHeartFill className="w-[100px] h-[100px]  text-white drop-shadow-2xl  " />
+        </div>
+      )}
       <video
         src={loop.media}
         ref={videoRef}
@@ -119,6 +134,7 @@ const LoopsCard = ({ loop }) => {
         className="w-full h-full object-cover"
         onClick={handleClick}
         onTimeUpdate={handleTimeUpdate}
+        onDoubleClick={handleLikeOnDoubleClick}
       />
 
       {/* mute icon */}
