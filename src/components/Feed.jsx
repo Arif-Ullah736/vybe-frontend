@@ -8,7 +8,8 @@ import Post from "./Post";
 
 const Feed = () => {
   const { postData } = useSelector((state) => state.post);
-  console.log("post data =====", postData);
+  const { userData } = useSelector((state) => state.user);
+
   return (
     <div className="w-full lg:w-[50%]  min-h-[100vh] lg:h-[100vh] bg-black relative lg:overflow-y-auto overflow-hidden ">
       {/* users profile */}
@@ -21,15 +22,11 @@ const Feed = () => {
 
       {/* story cards */}
       <div className="w-full flex overflow-x-auto scrollbar-none gap-[20px] items-center  p-[20px]">
-        <StoryDp userName="Arifasfsfsdfdsafds" />
-        <StoryDp userName="Arif" />
-        <StoryDp userName="Arif" />
-        <StoryDp userName="Arif" />
-        <StoryDp userName="Arif" />
-        <StoryDp userName="Arif" />
-        <StoryDp userName="Arif" />
-        <StoryDp userName="Arif" />
-        <StoryDp userName="Arif" />
+        <StoryDp
+          userName="Your Story"
+          profileImage={userData.profileImage}
+          story={userData.story}
+        />
       </div>
 
       {/* posts  */}

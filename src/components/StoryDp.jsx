@@ -1,13 +1,30 @@
 import React from "react";
 import dp from "../assets/dp.jpg";
-const StoryDp = ({ userName }) => {
+import { LuCirclePlus } from "react-icons/lu";
+import { useNavigate } from "react-router-dom";
+
+const StoryDp = ({ userName, profileImage, story }) => {
+  const navigate = useNavigate();
   return (
     <div className="w-[80px] flex flex-col">
-      <div className=" flex items-center justify-center rounded-full w-[80px] h-[80px] bg-gradient-to-b from-blue-500 to-blue-950">
+      <div
+        className={` relative  flex items-center justify-center rounded-full w-[80px] h-[80px] ${story ? " bg-gradient-to-b from-blue-500 to-blue-950" : ""}`}
+      >
         <div className="w-[70px] h-[70px] rounded-full border-2 border-black cursor-pointer overflow-hidden rounded-full flex items-center justify-center">
-          <img src={dp} alt="" className="w-full object-cover" />
+          <img
+            src={profileImage || dp}
+            alt=""
+            className="w-full object-cover"
+          />
         </div>
+        {!story && userName === "Your Story" && (
+          <LuCirclePlus
+            onClick={() => navigate("/upload")}
+            className=" bg-white w-[22px] h-[22px] rounded-full   absolute bottom-[8px] right-[10px]"
+          />
+        )}
       </div>
+
       <div className="text-[14px] text-center truncate text-white">
         {userName}
       </div>
