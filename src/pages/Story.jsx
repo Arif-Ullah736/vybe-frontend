@@ -9,7 +9,7 @@ import { setStoryData } from "../redux/storySlice";
 const Story = () => {
   const { userName } = useParams();
   const dispatch = useDispatch();
-  const { stroyData } = useSelector((state) => state.story);
+  const { storyData } = useSelector((state) => state.story);
 
   const handleStory = async () => {
     try {
@@ -30,7 +30,7 @@ const Story = () => {
   }, [userName]);
   return (
     <div className="w-full h-screen bg-black  flex justify-center  items-center">
-      <StoryCard story={stroyData} />
+      <StoryCard story={storyData} />
     </div>
   );
 };
