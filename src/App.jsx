@@ -14,6 +14,7 @@ import Upload from "./pages/Upload";
 import useGetAllPost from "./hooks/getAllPost";
 import Loops from "./pages/Loops";
 import useGetAllLoops from "./hooks/getAllLoops";
+import Story from "./pages/Story";
 
 export const serverUrl = "http://localhost:4000";
 function App() {
@@ -59,6 +60,11 @@ function App() {
       <Route
         path="/loops"
         element={userData ? <Loops /> : <Navigate to={"/signin"} />}
+      />
+
+      <Route
+        path="/story/:userName"
+        element={userData ? <Story /> : <Navigate to={"/signin"} />}
       />
     </Routes>
   );

@@ -2,13 +2,17 @@ import React from "react";
 import dp from "../assets/dp.jpg";
 import { LuCirclePlus } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const StoryDp = ({ userName, profileImage, story }) => {
   const navigate = useNavigate();
+  const { userData } = useSelector((state) => state.user);
 
   const handleClick = () => {
     if (!story && userName === "Your Story") {
       navigate("/upload");
+    } else if (story && userName === "Your Story") {
+      navigate(`/story/${userData.userName}`);
     }
   };
   return (

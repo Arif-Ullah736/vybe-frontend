@@ -11,6 +11,7 @@ import { setLoopData } from "../redux/loopSlice";
 import { setStoryData } from "../redux/storySlice";
 import { ClipLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
+import { setUserData } from "../redux/userSlice";
 
 const Upload = () => {
   const navigate = useNavigate();
@@ -74,7 +75,7 @@ const Upload = () => {
         },
       );
       console.log("result : ", result);
-      dispatch(setStoryData([...storyData, result.data]));
+      setUserData((prev) => ({ ...prev, story: result.data }));
       setLoading(false);
       navigate("/");
     } catch (err) {
