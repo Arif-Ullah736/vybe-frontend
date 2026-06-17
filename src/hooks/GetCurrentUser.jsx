@@ -7,6 +7,8 @@ import { setFollowing, setUserData } from "../redux/userSlice";
 const useGetCurrentUser = () => {
   const dispatch = useDispatch();
   const { userData } = useSelector((state) => state.user);
+  const { storyData } = useSelector((state) => state.story);
+
   useEffect(() => {
     if (!userData) {
       const fetchUser = async () => {
@@ -23,7 +25,7 @@ const useGetCurrentUser = () => {
       };
       fetchUser();
     }
-  }, [userData, dispatch]);
+  }, [userData, dispatch, storyData]);
 };
 
 export default useGetCurrentUser;
