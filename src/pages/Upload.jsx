@@ -8,7 +8,7 @@ import { serverUrl } from "../App";
 import axios from "axios";
 import { setPostData } from "../redux/postSlice";
 import { setLoopData } from "../redux/loopSlice";
-import { setStoryData } from "../redux/storySlice";
+import { setCurrentUserStory } from "../redux/storySlice";
 import { ClipLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "../redux/userSlice";
@@ -75,7 +75,8 @@ const Upload = () => {
         },
       );
       console.log("result : ", result);
-      setUserData((prev) => ({ ...prev, story: result.data }));
+      // setUserData((prev) => ({ ...prev, story: result.data }));
+      dispatch(setCurrentUserStory(result.data));
       setLoading(false);
       navigate("/");
     } catch (err) {
