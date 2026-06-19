@@ -10,6 +10,7 @@ const StoryCard = ({ story }) => {
   const navigate = useNavigate();
   const [timeLeft, setTimeLeft] = useState(15);
   const { userData } = useSelector((state) => state.user);
+  const [showViewers, setShowViewrs] = useState(false);
 
   useEffect(() => {
     if (timeLeft <= 0) {
@@ -54,7 +55,10 @@ const StoryCard = ({ story }) => {
 
       <div className="w-[80%]   flex    items-center justify-center  ">
         {story?.mediaType === "image" && (
-          <div className="w-[80%]] flex  items-center justify-center ">
+          <div
+            className="w-[80%]] flex  items-center justify-center cursor-pointer"
+            onClick={() => setShowViewrs(false)}
+          >
             <img
               src={story?.media}
               alt=""
@@ -64,21 +68,27 @@ const StoryCard = ({ story }) => {
         )}
 
         {story?.mediaType === "video" && (
-          <div className="w-[80%]  flex flex-col items-center justify-center ">
+          <div
+            className="w-[80%]  flex flex-col items-center justify-center cursor-pointer"
+            onClick={() => setShowViewrs(false)}
+          >
             <VideoPlayer media={story?.media} />
           </div>
         )}
       </div>
       {/* handle story viewers */}
       {story?.author?.userName === userData?.userName && (
-        <div className=" absolute w-full h-[70px]   bottom-0 p-2 mb-2 left-0  ">
+        <div className=" absolute w-full h-[70px] flex   gap-[10px]  bottom-0 p-2 mb-2 left-0  ">
           <div className="flex items-center gap-[5px] text-white">
             {" "}
             <FaEye />
             {story?.viewers?.length}
           </div>
 
-          <div className="relative flex items-center  ">
+          <div
+            className="relative flex items-center cursor-pointer"
+            onClick={() => setShowViewrs(true)}
+          >
             {story?.viewers?.slice(0, 3).map((viewer, index) => (
               <div
                 key={index}
@@ -92,10 +102,47 @@ const StoryCard = ({ story }) => {
                 />
               </div>
             ))}
-            {/* viewers length */}
-            {/* <div className="text-[22px] text-white md:text-[30px] font-semibold ml-2 ">
-              {story?.viewers?.length}
-            </div> */}
+          </div>
+        </div>
+      )}
+
+      {/* All Viewers Modal */}
+      {showViewers && story?.author?.userName === userData?.userName && (
+        <div className="absolute bottom-0 left-0 right-0 w-full h-[60%] bg-black bg-opacity-90 z-[100] flex flex-col items-center rounded-t-3xl overflow-y-auto p-6">
+          <div className="w-full max-w-[500px]">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-white text-[22px] font-semibold">
+                Viewers ({story?.viewers?.length})
+              </h2>
+              <button
+                onClick={() => setShowViewrs(false)}
+                className="text-white text-[24px] cursor-pointer hover:text-gray-400"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="flex flex-col gap-3">
+              {story?.viewers?.map((viewer, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-3 p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition cursor-pointer"
+                >
+                  <div className="w-[50px] h-[50px] rounded-full border-2 border-gray-700 overflow-hidden flex-shrink-0">
+                    <img
+                      src={viewer?.profileImage || dp}
+                      alt=""
+                      className="w-full object-cover"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <p className="text-white font-semibold">
+                      {viewer?.userName}
+                    </p>
+                    <p className="text-gray-400 text-sm">{viewer?.name}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
