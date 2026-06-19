@@ -13,6 +13,8 @@ const StoryDp = ({ userName, profileImage, story }) => {
       navigate("/upload");
     } else if (story && userName === "Your Story") {
       navigate(`/story/${userData.userName}`);
+    } else {
+      navigate(`/story/${userName}`);
     }
   };
   return (

@@ -39,30 +39,30 @@ const StoryCard = ({ story }) => {
         />
         <div className="w-[40px] h-[40px] rounded-full border-2 border-black cursor-pointer overflow-hidden">
           <img
-            src={story.author?.profileImage || dp}
+            src={story?.author?.profileImage || dp}
             alt=""
             className="w-full object-cover"
           />
         </div>
         <div className="font-semibold truncate w-[100px] text-white">
-          {story.author?.userName}
+          {story?.author?.userName}
         </div>
       </div>
 
       <div className="w-[80%]   flex    items-center justify-center  ">
-        {story.mediaType === "image" && (
+        {story?.mediaType === "image" && (
           <div className="w-[80%]] flex  items-center justify-center ">
             <img
-              src={story.media}
+              src={story?.media}
               alt=""
               className="  w-[80%] rounded-2xl max-w-full object-cover"
             />
           </div>
         )}
 
-        {story.mediaType === "video" && (
+        {story?.mediaType === "video" && (
           <div className="w-[80%]  flex flex-col items-center justify-center ">
-            <VideoPlayer media={story.media} />
+            <VideoPlayer media={story?.media} />
           </div>
         )}
       </div>
