@@ -3,10 +3,11 @@ import dp from "../assets/dp.jpg";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import VideoPlayer from "./VideoPlayer";
-
+import { useSelector } from "react-redux";
 const StoryCard = ({ story }) => {
   const navigate = useNavigate();
   const [timeLeft, setTimeLeft] = useState(15);
+  const { userData } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (timeLeft <= 0) {
@@ -66,6 +67,13 @@ const StoryCard = ({ story }) => {
           </div>
         )}
       </div>
+      {/* handle story viewers */}
+      {story?.author?.userName === userData?.userName && (
+        <div className="w-full h-[80px] bg-amber-300  absolute bottom-0 flex items-center">
+          <div>{story?.viewers?.length}</div>
+          <div className="text-white">Viewers</div>
+        </div>
+      )}
     </div>
   );
 };

@@ -102,11 +102,12 @@ const Profile = () => {
         <div className=" ">
           <div className="">
             {/* followers image  */}
-            <div className="relative flex  ">
+            <div className="relative flex items-center ">
               {profileData?.followers?.slice(0, 3).map((user, index) => (
                 <div
                   key={index}
-                  className={` w-[40px] h-[40px] rounded-full border-2 border-black cursor-pointer overflow-hidden ${index > 0 ? `absolute left-[${index * 9}px]` : ""}`}
+                  className="w-[40px] h-[40px] rounded-full border-2 border-black cursor-pointer overflow-hidden"
+                  style={{ marginLeft: index > 0 ? "-15px" : "0" }}
                 >
                   <img
                     src={user?.profileImage || dp}
@@ -116,7 +117,7 @@ const Profile = () => {
                 </div>
               ))}
               {/* followers length */}
-              <div className="text-[22px] text-white md:text-[30px] font-semibold ml-15 ">
+              <div className="text-[22px] text-white md:text-[30px] font-semibold ml-2 ">
                 {profileData?.followers.length}
               </div>
             </div>
@@ -131,11 +132,12 @@ const Profile = () => {
         <div className=" ">
           <div className="">
             {/* following image  */}
-            <div className="relative flex  ">
+            <div className="relative flex items-center ">
               {profileData?.following?.slice(0, 3).map((user, index) => (
                 <div
                   key={index}
-                  className={` w-[40px] h-[40px] rounded-full border-2 border-black cursor-pointer overflow-hidden ${index > 0 ? `absolute left-[${index * 9}px]` : ""}`}
+                  className="w-[40px] h-[40px] rounded-full border-2 border-black cursor-pointer overflow-hidden"
+                  style={{ marginLeft: index > 0 ? "-15px" : "0" }}
                 >
                   <img
                     src={user?.profileImage || dp}
@@ -145,7 +147,7 @@ const Profile = () => {
                 </div>
               ))}
               {/* following length */}
-              <div className="text-[22px] text-white md:text-[30px] font-semibold ml-15 ">
+              <div className="text-[22px] text-white md:text-[30px] font-semibold ml-2 ">
                 {profileData?.following.length}
               </div>
             </div>
