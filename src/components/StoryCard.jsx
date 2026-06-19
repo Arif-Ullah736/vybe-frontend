@@ -4,6 +4,8 @@ import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import VideoPlayer from "./VideoPlayer";
 import { useSelector } from "react-redux";
+import { FaEye } from "react-icons/fa";
+
 const StoryCard = ({ story }) => {
   const navigate = useNavigate();
   const [timeLeft, setTimeLeft] = useState(15);
@@ -69,9 +71,32 @@ const StoryCard = ({ story }) => {
       </div>
       {/* handle story viewers */}
       {story?.author?.userName === userData?.userName && (
-        <div className="w-full h-[80px] bg-amber-300  absolute bottom-0 flex items-center">
-          <div>{story?.viewers?.length}</div>
-          <div className="text-white">Viewers</div>
+        <div className=" absolute w-full h-[70px]   bottom-0 p-2 mb-2 left-0  ">
+          <div className="flex items-center gap-[5px] text-white">
+            {" "}
+            <FaEye />
+            {story?.viewers?.length}
+          </div>
+
+          <div className="relative flex items-center  ">
+            {story?.viewers?.slice(0, 3).map((viewer, index) => (
+              <div
+                key={index}
+                className="w-[40px] h-[40px] rounded-full border-2 border-black cursor-pointer overflow-hidden "
+                style={{ marginLeft: index > 0 ? "-15px" : "0" }}
+              >
+                <img
+                  src={viewer?.profileImage || dp}
+                  alt=""
+                  className="w-full object-cover"
+                />
+              </div>
+            ))}
+            {/* viewers length */}
+            {/* <div className="text-[22px] text-white md:text-[30px] font-semibold ml-2 ">
+              {story?.viewers?.length}
+            </div> */}
+          </div>
         </div>
       )}
     </div>

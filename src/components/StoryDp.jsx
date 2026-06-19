@@ -3,17 +3,32 @@ import dp from "../assets/dp.jpg";
 import { LuCirclePlus } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import { serverUrl } from "../App";
 
 const StoryDp = ({ userName, profileImage, story }) => {
   const navigate = useNavigate();
   const { userData } = useSelector((state) => state.user);
 
+  const handleViewers = async () => {
+    try {
+      const result = await axios.get(
+        `${serverUrl}/api/v1/story/view/${story._id}`,
+        { withCredentials: true },
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleClick = () => {
     if (!story && userName === "Your Story") {
       navigate("/upload");
     } else if (story && userName === "Your Story") {
+      handleViewers();
       navigate(`/story/${userData.userName}`);
     } else {
+      handleViewers();
       navigate(`/story/${userName}`);
     }
   };
