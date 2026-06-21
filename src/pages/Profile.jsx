@@ -180,7 +180,10 @@ const Profile = () => {
               onFollowChange={handleProfile}
             />
 
-            <button className="bg-white  text-black font-bold py-2 px-[10px] py-[5px] h-[40px] min-w-[150px] rounded-2xl cursor-pointer">
+            <button
+              className="bg-white  text-black font-bold py-2 px-[10px] py-[5px] h-[40px] min-w-[150px] rounded-2xl cursor-pointer"
+              onClick={() => navigate("/messageArea")}
+            >
               Message
             </button>
           </>
