@@ -10,6 +10,7 @@ import dp from "../assets/dp.jpg";
 import Navbar from "../components/Navbar";
 import FollowButton from "../components/FollowButton";
 import Post from "../components/Post";
+import { setSelectedUser } from "../redux/messageSlice";
 const Profile = () => {
   const { userName } = useParams();
   const dispatch = useDispatch();
@@ -182,7 +183,10 @@ const Profile = () => {
 
             <button
               className="bg-white  text-black font-bold py-2 px-[10px] py-[5px] h-[40px] min-w-[150px] rounded-2xl cursor-pointer"
-              onClick={() => navigate("/messageArea")}
+              onClick={() => {
+                dispatch(setSelectedUser(profileData));
+                navigate("/messageArea");
+              }}
             >
               Message
             </button>
