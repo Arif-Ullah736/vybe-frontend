@@ -5,19 +5,26 @@ import StoryDp from "./StoryDp";
 import Navbar from "./Navbar";
 import { useSelector } from "react-redux";
 import Post from "./Post";
+import { MdOutlineMessage } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const Feed = () => {
   const { postData } = useSelector((state) => state.post);
   const { userData } = useSelector((state) => state.user);
   const { storyList, currentUserStory } = useSelector((state) => state.story);
+  const navigate = useNavigate();
 
   return (
     <div className="w-full lg:w-[50%]  min-h-[100vh] lg:h-[100vh] bg-black relative lg:overflow-y-auto overflow-hidden ">
       {/* users profile */}
       <div className="w-full h-[100px] flex items-center justify-between p-[20px] lg:hidden">
         <img src={logo5} alt="" className="w-[80px] " />
-        <div>
+        <div className="flex items-center gap-[10px]">
           <FaRegHeart className="text-white w-[25px] h-[25px]" />
+          <MdOutlineMessage
+            className="text-white w-[25px] h-[25px]"
+            onClick={() => navigate("/messages")}
+          />
         </div>
       </div>
 

@@ -17,6 +17,7 @@ import useGetAllLoops from "./hooks/getAllLoops";
 import Story from "./pages/Story";
 import useGetAllStories from "./hooks/getAllStories";
 import Messages from "./pages/Messages";
+import MessageArea from "./pages/MessageArea";
 
 export const serverUrl = "http://localhost:4000";
 function App() {
@@ -73,6 +74,10 @@ function App() {
       <Route
         path="/messages"
         element={userData ? <Messages /> : <Navigate to={"/signin"} />}
+      />
+      <Route
+        path="/messageArea"
+        element={userData ? <MessageArea /> : <Navigate to={"/signin"} />}
       />
     </Routes>
   );
