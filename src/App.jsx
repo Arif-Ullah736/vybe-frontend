@@ -16,6 +16,7 @@ import Loops from "./pages/Loops";
 import useGetAllLoops from "./hooks/getAllLoops";
 import Story from "./pages/Story";
 import useGetAllStories from "./hooks/getAllStories";
+import Messages from "./pages/Messages";
 
 export const serverUrl = "http://localhost:4000";
 function App() {
@@ -67,6 +68,11 @@ function App() {
       <Route
         path="/story/:userName"
         element={userData ? <Story /> : <Navigate to={"/signin"} />}
+      />
+
+      <Route
+        path="/messages"
+        element={userData ? <Messages /> : <Navigate to={"/signin"} />}
       />
     </Routes>
   );
